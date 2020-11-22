@@ -332,7 +332,7 @@ module.exports.muabannhadat = async function (date, pages) {
 
 
         }
-        for (const ele of result) {
+      await Promise.all(result.map( async ele=>   {
 
             const $$ = await fetchHTML(ele.href)
 
@@ -376,7 +376,7 @@ module.exports.muabannhadat = async function (date, pages) {
                 }
 
             })
-        }
+        }))
 
 
 

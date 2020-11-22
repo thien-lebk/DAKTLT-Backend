@@ -12,6 +12,7 @@ const cheerio = require('cheerio');
 const e = require('express');
 
 const {batdongsanDotCom} = require('../module/thien');
+const {muabannhadat} = require('../module/thien');
 
 
 
@@ -28,7 +29,7 @@ exports.muabannhadat = async (req, res, next) => {
     var pages = req.query.page;
     var date = req.query.date;
     try {
-        a = await thien.muabannhadat(date, pages);
+        a = await muabannhadat(date, pages);
 
     } catch (error) {
         console.log(error);
