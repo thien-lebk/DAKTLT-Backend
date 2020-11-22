@@ -124,7 +124,7 @@ async function batdongsanDotCom(date, pages) {
                     // console.log("-----");
                     // console.log(Date.parse(date));
                     // console.log(Date.parse(abc.slice(0, 10)));
-                } else {
+                } else{
                     console.log(abc);
 
                 }
@@ -185,15 +185,15 @@ async function batdongsanDotCom(date, pages) {
         //xuất file
         try {
             await csvWriter.writeRecords(records)       // returns a promise
-                .then(() => {
-                    console.log('...Done page ' + index);
-                });
-            // console.log(checkDate);
+            .then(() => {
+                console.log('...Done page ' + index);
+            });
+        // console.log(checkDate);
         } catch (error) {
             console.log(error);
         }
-
-
+       
+           
     }
     return result;
 }
@@ -237,15 +237,18 @@ async function muabannhadat(date, pages) {
         let cx = $('.relative.h-full.relative.ml-5')
         cx.each((i, e) => {
             arrID.push($(e).attr('data-bi-listing-id'));
-            // console.log($(e).attr('data-bi-listing-id'));
+           // console.log($(e).attr('data-bi-listing-id'));
         })
 
         //href
         var arrHref = [];
 
-        //IMG
-        var arrImg = [];
-        
+        cx = $('.no-underline.text-primary')
+        cx.each((i, e) => {
+
+            arrHref.push('https://www.muabannhadat.vn'+$(e).attr('href'))
+            
+        })
 
         //arrTitle
 
@@ -255,10 +258,15 @@ async function muabannhadat(date, pages) {
         cx.each((i, e) => {
             // console.log($(e).attr('title'));
             arrTitle.push($(e).attr('title'))
-            arrImg.push(1);
         })
 
+        //IMG
 
+        var arrImg = [];
+        cx = $('.listing-card-image-switcher-thumbnail-parent listing-card-image-switcher-thumbnail')
+        cx.each((i, e) => {
+            arrImg.push($(e).attr('src'))
+        })
 
         //price
         var arrPrice = [];
@@ -304,7 +312,7 @@ async function muabannhadat(date, pages) {
                     // console.log("-----");
                     // console.log(Date.parse(date));
                     // console.log(Date.parse(abc.slice(0, 10)));
-                } else {
+                } else{
                     console.log(abc);
 
                 }
@@ -363,22 +371,19 @@ async function muabannhadat(date, pages) {
 
         }
 
-        // xuất file
+       // xuất file
         try {
             await csvWriter.writeRecords(records)       // returns a promise
-                .then(() => {
-                    console.log('...Done page ' + index);
-                });
-            // console.log(checkDate);
+            .then(() => {
+                console.log('...Done page ' + index);
+            });
+        // console.log(checkDate);
         } catch (error) {
             // console.log(error);
         }
-
-
+       
+           
     }
-    // result.forEach(ele=>{
-        
-    // })
     return result;
 }
 
@@ -388,7 +393,7 @@ async function muabannhadat(date, pages) {
 exports.batdongsanDotCom = async (req, res, next) => {
     var pages = req.query.page;
     var date = req.query.date;
-    a = await batdongsanDotCom(date, pages);
+  a =   await batdongsanDotCom(date, pages);
 
     return res.send(a);
 
@@ -396,7 +401,7 @@ exports.batdongsanDotCom = async (req, res, next) => {
 exports.muabannhadat = async (req, res, next) => {
     var pages = req.query.page;
     var date = req.query.date;
-    a = await muabannhadat(date, pages);
+  a =   await muabannhadat(date, pages);
 
     return res.send(a);
 
