@@ -1,10 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-//Thien controller
-const thienController = require('../controllers/thien-controller');
-
-
+// tinh controller
+const tinhController = require('../controllers/tinh-controller');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -12,8 +10,10 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post('/batdongsan', thienController.batdongsanDotCom);
-router.post('/muabannhadat', thienController.muabannhadat);
+// tinh
+router.post('/tinh1', tinhController.tinh1);
+// router.post('/tinh2', tinhController.tinh2);
+
 
 
 
