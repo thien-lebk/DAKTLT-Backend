@@ -43,7 +43,7 @@ module.exports.batdongsanDotCom = async function (date, pages) {
 
 
 
-        const $ = await fetchHTML(`https://batdongsan.com.vn/nha-dat-ban/p${index}`)
+        const $ = await fetchHTML(`https://batdongsan.com.vn/nha-dat-ban/page=${index}`)
         //ID
         var arrID = [];
         let cx = $('.iconSave')
@@ -90,8 +90,13 @@ module.exports.batdongsanDotCom = async function (date, pages) {
         var arrArea = [];
         cx = $('.iconSave')
         cx.each((i, e) => {
-            let tempt = /[\d]+/.exec($(e).attr('data-area'));
-            arrArea.push(tempt[0]+ " m2");
+            if($(e).attr('data-area') != 'Không xác định'){
+                let tempt = /[\d]+/.exec($(e).attr('data-area'));
+
+            } else{
+                arrArea.push("Không xác định");
+
+            }
            
         })
 
@@ -205,7 +210,6 @@ module.exports.muabannhadat = async function (date, pages) {
         var totalPage = 0;
         if (pages) totalPage = pages;
         if (date) totalPage = 99;
-
         for (let index = 1; index <= totalPage; index++) {
 
             //csv
@@ -236,7 +240,7 @@ module.exports.muabannhadat = async function (date, pages) {
                 arrID.push($(e).attr('data-bi-listing-id'));
                 // console.log($(e).attr('data-bi-listing-id'));
             })
-
+            console.log(arrID);
             //href
             var arrHref = [];
 
@@ -276,11 +280,11 @@ module.exports.muabannhadat = async function (date, pages) {
                     }
                 }
             })
-
-
+            console.log(arrDate);
             //Thêm data vào record
             var records = [];
             for (let i = 0; i < 20; i++) {
+                console.log(arrID[i]);
                 if (arrID[i]) {
                     if (date) {
                         if (Date.parse(date) == Date.parse(arrDate[i].slice(0, 10))) {
@@ -318,24 +322,22 @@ module.exports.muabannhadat = async function (date, pages) {
                 }
 
             }
-
             // xuất file
-            try {
-                await csvWriter.writeRecords(records)       // returns a promise
-                    .then(() => {
-                        console.log('...Done page ' + index);
-                    });
-                // console.log(checkDate);
-            } catch (error) {
-                // console.log(error);
-            }
-
+            // try {
+            //     await csvWriter.writeRecords(records)       // returns a promise
+            //         .then(() => {
+            //             console.log('...Done page ' + index);
+            //         });
+            //     // console.log(checkDate);
+            // } catch (error) {
+            //     // console.log(error);
+            // }
 
         }
       await Promise.all(result.map( async ele=>   {
 
             const $$ = await fetchHTML(ele.href)
-
+        console.log("here");
             //IMG
             let arrImg = [];
             cx = $$('.flex.items-center.h-64 img')
