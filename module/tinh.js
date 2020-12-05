@@ -88,7 +88,7 @@ async function crawlWeb(url) {
 
 	//Content
 	var content = '';
-	cx = $('div.re-content p span')
+	cx = $('.re-content p')
 	cx.each((i, e) => {
 		if (i == 0) {
 			content += $(e).text();
