@@ -16,15 +16,14 @@ async function fetchHTML(url) {
 	const { data } = await axios.get(url)
 	return cheerio.load(data)
 }
-
 //Viet fuction nay ne
-async function crawlWeb(url) {
-	let obj = { id: '', href: '', title: '', img: '', price: '', area: '', location: '', content: '', date: '' }
+module.exports.crawlWeb  = async function (url) {
+	let obj = { id: '', href: '', title: '', img: [], price: '', area: '', location: '', content: '', date: '' }
 
 
 	const $ = await fetchHTML(url)
 	//ID
-	var id;
+	var id = '';
 	let cx = $('.sp3')
 	cx.each((i, e) => {
 		if (i == 2) {
@@ -33,7 +32,7 @@ async function crawlWeb(url) {
 	})
 
 	//href
-	var href;
+	var href = '';
 	// cx = $('h3 a')
 	// cx.each((i, e) => {
 	// 	arrHref.push("https://homedy.com/" + $(e).attr('href'))
@@ -42,7 +41,7 @@ async function crawlWeb(url) {
 
 	//arrTitle
 
-	var title;
+	var title = '';
 	cx = $('.re-title')
 	cx.each((i, e) => {
 		title = $(e).text();
@@ -53,43 +52,59 @@ async function crawlWeb(url) {
 	var img = [];
 	cx = $('.fancybox')
 	cx.each((i, e) => {
-		img.push($(e).attr('href')) ;
+		img.push($(e).attr('href'));
 	})
 
 	//price
-	var price;
+	var price = '';
 	cx = $('.re-price')
 	cx.each((i, e) => {
 		price = $(e).text();
+		const subPrice = price.split(' ');
+		price = subPrice[1] + ' ' + subPrice[2];
 	})
 
 	//Area
-	var area;
-	cx = $('.ion-home')
+	var area = '';
+	cx = $('.re-property li')
 	cx.each((i, e) => {
-		area = $(e).text();
+		if (i == 0) {
+			area = $(e).text();
+			const indexColon = area.indexOf(':');
+			const indexLastNewline = area.indexOf('\n', indexColon);
+			area = area.substr(indexColon + 2, indexLastNewline - (indexColon + 2));
+		}
 	})
 
 	//Location
-	var location;
+	var location = '';
 	cx = $('.re-address')
 	cx.each((i, e) => {
 		location = $(e).text();
+		location = location.substr(5);
+		location = location.substr(0, location.length - 1);
 	})
 
 	//Content
-	var content;
-	cx = $('div.re-content p span')
+	var content = '';
+	cx = $('.re-content p')
 	cx.each((i, e) => {
-		content = $(e).text() + '\n';
-	})
+		if (i == 0) {
+			content += $(e).text();
+		}
+		else {
+			content += '. ' + $(e).text();
+		}
+	});
 
 	// Date
-	var date;
+	var date = '';
 	cx = $('.sp3');
 	cx.each((i, e) => {
 		if (i == 0) {
 			date = $(e).text();
+			const subDate = date.split('/');
+			date = subDate[1] + '/' + subDate[0] + '/' + subDate[2];
 		}
 	})
 
@@ -105,7 +120,6 @@ async function crawlWeb(url) {
 
 	return obj;
 }
-
 
 module.exports.tinhfunc1 = async function (date, pages) {
 	var result = []

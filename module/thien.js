@@ -55,7 +55,7 @@ module.exports.batdongsanDotCom = async function (date, pages) {
         //href
         var arrHref = [];
 
-        cx = $('.product-avatar')
+        cx = $('.wrap-plink')
         cx.each((i, e) => {
 
             arrHref.push("https://batdongsan.com.vn"+  $(e).attr('href'))
@@ -65,10 +65,9 @@ module.exports.batdongsanDotCom = async function (date, pages) {
 
         var arrTitle = [];
 
-        cx = $('.product-title a')
+        cx = $('.vipZero.product-link')
         cx.each((i, e) => {
-            // console.log($(e).attr('title'));
-            arrTitle.push($(e).attr('title'))
+            arrTitle.push($(e).text().split('\n')[1].trim())
         })
 
         //IMG
@@ -92,14 +91,14 @@ module.exports.batdongsanDotCom = async function (date, pages) {
         cx.each((i, e) => {
             if($(e).attr('data-area') != 'Không xác định'){
                 let tempt = /[\d]+/.exec($(e).attr('data-area'));
-
+                arrArea.push(tempt[0] + " m2");
             } else{
                 arrArea.push("Không xác định");
 
             }
            
         })
-
+        // console.log(arrArea);
         //Location
         var arrLocation = [];
         cx = $('.product-info .location')
@@ -346,7 +345,7 @@ module.exports.muabannhadat = async function (date, pages) {
       await Promise.all(result.map( async ele=>   {
 
             const $$ = await fetchHTML(ele.href)
-        console.log("here");
+        // console.log("here");
             //IMG
             let arrImg = [];
             cx = $$('.flex.items-center.h-64 img')
