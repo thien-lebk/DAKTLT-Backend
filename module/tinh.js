@@ -50,10 +50,10 @@ async function crawlWeb(url) {
 
 	//IMG
 
-	var img;
+	var img = [];
 	cx = $('.fancybox')
 	cx.each((i, e) => {
-		img = $(e).attr('href');
+		img.push($(e).attr('href')) ;
 	})
 
 	//price
