@@ -18,131 +18,90 @@ async function fetchHTML(url) {
 }
 
 //Viet fuction nay ne
-function crawlWeb(url) {
+async function crawlWeb(url) {
 	let obj = { id: '', href: '', title: '', img: '', price: '', area: '', location: '', content: '', date: '' }
 
 
 	const $ = await fetchHTML(url)
 	//ID
-	var arrID = [];
+	var id;
 	let cx = $('.sp3')
 	cx.each((i, e) => {
 		if (i == 2) {
-			arrID.push($(e).text())
+			id = $(e).text();
 		}
 	})
 
 	//href
-	var arrHref = [];
+	var href;
 	// cx = $('h3 a')
 	// cx.each((i, e) => {
 	// 	arrHref.push("https://homedy.com/" + $(e).attr('href'))
 	// })
-	arrHref.push(url);
+	href = url;
 
 	//arrTitle
 
-	var arrTitle = [];
+	var title;
 	cx = $('.re-title')
 	cx.each((i, e) => {
-		arrTitle.push($(e).text())
+		title = $(e).text();
 	})
 
 	//IMG
 
-	var arrImg = [];
+	var img;
 	cx = $('.fancybox')
 	cx.each((i, e) => {
-		arrImg.push($(e).attr('href'))
+		img = $(e).attr('href');
 	})
 
 	//price
-	var arrPrice = [];
+	var price;
 	cx = $('.re-price')
 	cx.each((i, e) => {
-		arrPrice.push($(e).text())
+		price = $(e).text();
 	})
 
 	//Area
-	var arrArea = [];
+	var area;
 	cx = $('.ion-home')
 	cx.each((i, e) => {
-		arrArea.push($(e).text());
+		area = $(e).text();
 	})
 
 	//Location
-	var arrLocation = [];
+	var location;
 	cx = $('.re-address')
 	cx.each((i, e) => {
-		arrLocation.push($(e).text())
+		location = $(e).text();
 	})
 
 	//Content
-	var arrContent = [];
+	var content;
 	cx = $('div.re-content p span')
 	cx.each((i, e) => {
-		arrContent.push($(e).text() + '\n')
+		content = $(e).text() + '\n';
 	})
 
 	// Date
-	var arrDate = [];
+	var date;
 	cx = $('.sp3');
 	cx.each((i, e) => {
 		if (i == 0) {
-			arrDate.push($(e).text());
+			date = $(e).text();
 		}
 	})
 
-	//  console.log(arrID.length);
-	//  console.log(arrHref.length);
-	//  console.log(arrTitle.length);
-	//  console.log(arrImg.length);
-	//  console.log(arrPrice.length);
-	//  console.log(arrArea.length);
-	//  console.log(arrLocation.length);
-	//  console.log(arrContent.length);
-	//  console.log(arrDate.length);
-
-
-	//Thêm data vào record
-	var records = [];
-	for (let i = 0; i < 20; i++) {
-		// if (arrID[i]) {
-		if (date) {
-			if (Date.parse(date) == Date.parse(arrDate[i].slice(0, 10))) {
-				let obj = { id: '', href: '', title: '', img: [], price: '', area: '', location: '', content: '', date: '' }
-				obj.id = arrID[i];
-				obj.href = arrHref[i];
-				obj.title = arrTitle[i];
-				obj.img.push(arrImg[i]);
-				obj.price = arrPrice[i];
-				obj.area = arrArea[i];
-				obj.location = arrLocation[i];
-				obj.content = arrContent[i];
-				obj.date = arrDate[i];
-				// if(checkDate == 0) records.push(obj);
-				records.push(obj);
-				result.push(obj);
-			}
-		} else {
-			let obj = { id: '', href: '', title: '', img: [], price: '', area: '', location: '', content: '', date: '' }
-			obj.id = arrID[i];
-			obj.href = arrHref[i];
-			obj.title = arrTitle[i];
-			obj.img.push(arrImg[i]);
-			obj.price = arrPrice[i];
-			obj.area = arrArea[i];
-			obj.location = arrLocation[i];
-			obj.content = arrContent[i];
-			obj.date = arrDate[i];
-			// if(checkDate == 0) records.push(obj);
-			records.push(obj);
-			result.push(obj);
-		}
-
-		// }
-
-	}
+	obj.id = id;
+	obj.href = href;
+	obj.title = title;
+	obj.img = img;
+	obj.price = price;
+	obj.area = area;
+	obj.location = location;
+	obj.content = content;
+	obj.date = date;
 
 	return obj;
 }
