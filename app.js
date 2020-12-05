@@ -10,6 +10,7 @@ const { resolve } = require('path');
 
 var app = express();
 
+require('./db/config') //run connect to database
 
 
 
