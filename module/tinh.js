@@ -18,7 +18,7 @@ async function fetchHTML(url) {
 }
 
 //Viet fuction nay ne
-function crawlWeb(url) {
+async function crawlWeb(url) {
 	let obj = { id: '', href: '', title: '', img: '', price: '', area: '', location: '', content: '', date: '' }
 
 
@@ -93,17 +93,9 @@ function crawlWeb(url) {
 		}
 	})
 
-	//  console.log(arrID.length);
-	//  console.log(arrHref.length);
-	//  console.log(arrTitle.length);
-	//  console.log(arrImg.length);
-	//  console.log(arrPrice.length);
-	//  console.log(arrArea.length);
-	//  console.log(arrLocation.length);
-	//  console.log(arrContent.length);
-	//  console.log(arrDate.length);
+	
 
-
+	
 	//Thêm data vào record
 	var records = [];
 	for (let i = 0; i < 20; i++) {
