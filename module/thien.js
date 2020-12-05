@@ -213,26 +213,35 @@ module.exports.muabannhadat = async function (date, pages) {
         for (let index = 1; index <= totalPage; index++) {
 
             //csv
-            const csvWriter = createCsvWriter({
-                path: `/muabannhadat-p${index}.csv`,
-                header: [
-                    { id: 'id', title: 'id' },
-                    { id: 'href', title: 'href' },
-                    { id: 'title', title: 'title' },
-                    { id: 'img', title: 'img' },
-                    { id: 'price', title: 'price' },
-                    { id: 'area', title: 'area' },
-                    // { id: 'location', title: 'location' },
-                    { id: 'content', title: 'content' },
-                    { id: 'date', title: 'date' }
-                ]
-            });
+            // const csvWriter = createCsvWriter({
+            //     path: `/muabannhadat-p${index}.csv`,
+            //     header: [
+            //         { id: 'id', title: 'id' },
+            //         { id: 'href', title: 'href' },
+            //         { id: 'title', title: 'title' },
+            //         { id: 'img', title: 'img' },
+            //         { id: 'price', title: 'price' },
+            //         { id: 'area', title: 'area' },
+            //         // { id: 'location', title: 'location' },
+            //         { id: 'content', title: 'content' },
+            //         { id: 'date', title: 'date' }
+            //     ]
+            // });
 
 
+            const $ = await fetchHTML(`https://nha.chotot.com/toan-quoc/mua-ban-bat-dong-san?page=${index}`)
+            console.log("----");
+            console.log($);
+            console.log("----");
 
-
-
-            const $ = await fetchHTML(`https://www.muabannhadat.vn/mua-ban-bat-dong-san?page=${index}`)
+            // try {
+            //     // const $ = await fetchHTML(`https://www.muabannhadat.vn/mua-ban-bat-dong-san?page=${index}`)
+                
+            // } 
+            // catch (err){
+            //     console.log(err);
+            //     console.log("-----");
+            // }
             //ID
             var arrID = [];
             let cx = $('.relative.h-full.relative.ml-5')
