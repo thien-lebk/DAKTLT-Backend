@@ -17,6 +17,15 @@ async function fetchHTML(url) {
 	return cheerio.load(data)
 }
 
+//Viet fuction nay ne
+function crawlWeb(url) {
+	let obj = { id: '', href: '', title: '', img: '', price: '', area: '', location: '', content: '', date: '' }
+
+
+	return obj;
+}
+
+
 module.exports.tinhfunc1 = async function (date, pages) {
 	var result = []
 	var totalPage = 0;
