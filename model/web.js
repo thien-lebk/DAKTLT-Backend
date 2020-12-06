@@ -5,7 +5,7 @@ const webSchema = mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        minlength: 4,
+        
     }
     ,
     href: {
@@ -21,11 +21,11 @@ const webSchema = mongoose.Schema({
     }
     ,
     imgs: [{
-        img: {
+        
             type: String,
             required: true,
             trim: true,
-        }
+        
     }]
     ,
     area: {
