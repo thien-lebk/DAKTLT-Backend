@@ -16,12 +16,12 @@ const { muabannhadat } = require('../module/thien');
 const { crawlWeb } = require('../module/tinh');
 
 //add json
-const bdsan = require('../samplerecord/badomsan.json')
+// const bdsan = require('../samplerecord/badomsan.json')
 // console.log(bdsan.length);
 
 exports.adddata = async (req, res, next) => {
     // let obj = { id: '', href: '', title: '', img: '', price: '', area: '', location: '', content: '', date: '' }
-    var data = bdsan;
+    var data = [];
     // // await Promise.all(bdsan.map(async x => {
 
     //     for (const x of bdsan) {
@@ -34,41 +34,41 @@ exports.adddata = async (req, res, next) => {
     //     // console.log(data);
 
     //     }
-    await Promise.all(data.map(async x => {
+    // await Promise.all(data.map(async x => {
 
-    // for (const x of data) {
-        let id = x.id;
-        let href = x.href;
-        let title = x.title;
-        let imgs = x.img;
+    // // for (const x of data) {
+    //     let id = x.id;
+    //     let href = x.href;
+    //     let title = x.title;
+    //     let imgs = x.img;
 
-        let price = x.price;
-        let area = x.area;
-        let location = x.location;
-        let content = x.content;
-        let date = x.date;
-        let obj = new Web({
-            id: id,
-            href: href,
-            title: title,
-            imgs: imgs,
-            price: price,
-            area: area,
-            location: location,
-            content: content,
-            date: date
+    //     let price = x.price;
+    //     let area = x.area;
+    //     let location = x.location;
+    //     let content = x.content;
+    //     let date = x.date;
+    //     let obj = new Web({
+    //         id: id,
+    //         href: href,
+    //         title: title,
+    //         imgs: imgs,
+    //         price: price,
+    //         area: area,
+    //         location: location,
+    //         content: content,
+    //         date: date
 
-        })
-        // console.log(obj);
-        try {
-            await obj.save();
+    //     })
+    //     // console.log(obj);
+    //     try {
+    //         await obj.save();
 
-            // console.log(obj);
-        } catch (error) {
-            // console.log(error);
-        }
-    // }
-    }))
+    //         // console.log(obj);
+    //     } catch (error) {
+    //         // console.log(error);
+    //     }
+    // // }
+    // }))
 
     return res.send("success");
 }
