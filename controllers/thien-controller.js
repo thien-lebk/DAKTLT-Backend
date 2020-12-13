@@ -95,3 +95,90 @@ exports.muabannhadat = async (req, res, next) => {
     return res.send(a);
 
 }
+
+exports.searchLocation = async (req, res, next) => {
+  
+    try {
+        var location =   req.query.location  || "";
+       var page = req.query.page || 1;
+       var totalEle = 10;
+       const a = await Web.find({location:{$regex:location, $options: 'i'}})
+       console.log(a.length);
+       var data = []
+       if(page == 1){
+        var i = 0;
+       }else{
+           var i = (page-1)*totalEle ;
+       }
+      
+       for ( i ; i < totalEle; i++){
+           if(a[i]) data.push(a[i])
+     
+       }
+       
+       let objReturn = {"totalPage":a.length,"currPage":page,"data":data}
+       if(a.length % totalEle == 0){
+           objReturn.totalPage = parseInt(a.length/totalEle)
+       } else{
+        objReturn.totalPage = parseInt(a.length/totalEle) + 1
+
+       }
+       return res.send(objReturn);
+    } catch (error) {
+        console.log(error);
+    }
+
+   
+
+}
+exports.searchArea = async (req, res, next) => {
+    
+    try {
+        var type = req.query.type
+
+        var areaFrom = parseInt(req.query.areaFrom)   || 0;
+        var areaTo = parseInt(req.query.areaTo)   || 0;
+       var page = req.query.page || 1;
+       var totalEle = 10;
+       var a = await Web.find({title:{$regex:type, $options: 'i'}}).sort({area:1})
+       var newA = []
+       a.forEach(ele=>{
+           let compare = ele.area.split("m2") ;
+           if(compare[0] >= areaFrom && compare[0] <= areaTo){
+            newA.push(ele);
+           }
+       }
+        )
+        a = newA;
+        console.log(a.length);
+
+       var data = []
+       if(page == 1){
+        var i = 0;
+       }else{
+           var i = (page-1)*totalEle ;
+       }
+      
+       for ( i ; i < totalEle; i++){
+           if(a[i]) data.push(a[i])
+     
+       }
+       
+       let objReturn = {"totalPage":a.length,"currPage":page,"data":data}
+       if(a.length % totalEle == 0){
+           console.log("here");
+           objReturn.totalPage = parseInt(a.length/totalEle) ;
+
+       } else{
+           console.log(a.length/totalEle );
+        objReturn.totalPage =parseInt(a.length/totalEle) + 1
+
+       }
+       return res.send(objReturn);
+    } catch (error) {
+        console.log(error);
+    }
+
+   
+
+}
