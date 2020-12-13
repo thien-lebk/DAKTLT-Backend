@@ -1,3 +1,5 @@
+const Web = require('../model/web')
+
 //Tao csv
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 
@@ -34,5 +36,71 @@ exports.tinh2 = async (req, res, next) => {
     }
 
     return res.send(a);
+
+}
+
+exports.getall = async (req, res, next) => {
+
+	try {
+		var page = req.query.page || 1;
+		var totalEle = 10;
+		const a = await Web.find()
+		console.log(a.length);
+		var data = []
+		if (page == 1) {
+			var i = 0;
+		} else {
+			var i = (page - 1) * totalEle;
+		}
+
+		for (i; i < totalEle; i++) {
+			data.push(a[i])
+		}
+
+		let objReturn = { "totalPage": a.length, "currPage": page, "data": data }
+		if (a.length % totalEle == 0) {
+			objReturn.totalPage = parseInt(a.length / totalEle)
+		} else {
+			objReturn.totalPage = parseInt(a.length / totalEle) + 1
+
+		}
+		return res.send(objReturn);
+	} catch (error) {
+		console.log(error);
+	}
+
+}
+
+exports.searchTitle = async (req, res, next) => {
+
+	try {
+		var title = req.query.title || "";
+		var page = req.query.page || 1;
+		var totalEle = 10;
+		const a = await Web.find({ title: { $regex: title, $options: 'i' } })
+		console.log(a.length);
+		var data = []
+		if (page == 1) {
+			var i = 0;
+		} else {
+			var i = (page - 1) * totalEle;
+		}
+
+		for (i; i < totalEle; i++) {
+			if (a[i]) data.push(a[i])
+
+		}
+
+		let objReturn = { "totalPage": a.length, "currPage": page, "data": data }
+		if (a.length % totalEle == 0) {
+			objReturn.totalPage = parseInt(a.length / totalEle)
+		} else {
+			objReturn.totalPage = parseInt(a.length / totalEle) + 1
+
+		}
+		return res.send(objReturn);
+	} catch (error) {
+		console.log(error);
+	}
 
 }
