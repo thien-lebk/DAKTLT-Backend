@@ -14,8 +14,7 @@ router.get('/', function(req, res, next) {
 // tinh
 router.post('/tinh1', tinhController.tinh1);
 // router.post('/tinh2', tinhController.tinh2);
-router.get('/getall', tinhController.getall);
-router.get('/searchtitle', tinhController.searchTitle);
+
 
 //Thien
 
