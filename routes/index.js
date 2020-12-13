@@ -10,6 +10,8 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+router.get('/getall', tinhController.getall);
+router.get('/searchtitle', tinhController.searchTitle);
 
 // tinh
 router.post('/tinh1', tinhController.tinh1);
