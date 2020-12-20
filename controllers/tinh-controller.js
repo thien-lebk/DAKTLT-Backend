@@ -104,3 +104,107 @@ exports.searchTitle = async (req, res, next) => {
 	}
 
 }
+
+exports.cleanAddress = async (req, res, next) => {
+
+	try {
+		var type = req.query.type;
+		var address = req.query.address;
+		var a = await Web.find({ $or: [{ title: { $regex: type, $options: 'i' } }, { location: { $regex: type, $options: 'i' } }, { content: { $regex: type, $options: 'i' } }] })
+		//    console.log(a);
+		for (const ele of a) {
+			if (!ele.address) {
+				ele.address = address;
+
+				await ele.save();
+				console.log("done " + ele._id);
+			}
+
+		}
+
+		console.log("done " + a.length);
+		return res.send("done")
+	} catch (err) {
+		console.log(err);
+		return err;
+	}
+}
+
+exports.fixAddress = async (req, res, next) => {
+
+	try {
+		var type = req.query.search;
+		var fix = req.query.fix;
+		var a = await Web.find({ $or: [{ address: { $regex: type, $options: 'i' } }] })
+		//    console.log(a);
+		for (const ele of a) {
+
+			ele.address = fix;
+
+			await ele.save();
+			console.log("done " + ele._id);
+
+		}
+
+		console.log("done " + a.length);
+
+		return res.send("done")
+	} catch (err) {
+		console.log(err);
+		return err;
+	}
+}
+
+exports.findnotadd = async (req, res, next) => {
+
+	try {
+
+		var a = await Web.find()
+		a = a.filter(ele => !ele.address)
+		console.log(a.length)
+		return res.send(a)
+	} catch (err) {
+		console.log(err);
+		return err;
+	}
+}
+
+exports.batdongsan321 = async (req, res, next) => {
+	try {
+		var url = req.query.url;
+		var listWeb = await Web.find({ href: { $regex: "batdongsan321.com", $options: 'i' } })
+
+		for (const web of listWeb) {
+			let a = await batdongsan321(web.href);
+			web.address = a;
+			await web.save();
+			console.log("done " + web._id);
+		}
+
+		return res.send("done all");
+	} catch (error) {
+		console.log(error);
+		return res.send("123")
+	}
+
+}
+
+exports.batdongsan = async (req, res, next) => {
+	try {
+		// var listWeb = await Web.find({address:{$regex:"Bà Rịa - Vũng Tàu -Bà Rịa", $options: 'i'}})
+		var listWeb = await Web.find({ href: { $regex: "batdongsan.com", $options: 'i' } })
+		// var listWeb = await Web.find({href:{$regex:"batdongsan321.com", $options: 'i'}}).distinct('address') 
+
+		//    for (const web of listWeb) {
+		//        web.address = web.location.split(',')[1].trim() + " -"  + web.location.split(',')[0].trim()
+		//      await  web.save();
+		//        console.log("done "+web._id);
+		//    }
+		//    console.log("done all");
+		return res.send(listWeb);
+	} catch (error) {
+		console.log(error);
+		return res.send("123")
+	}
+
+}
