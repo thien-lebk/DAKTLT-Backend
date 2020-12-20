@@ -46,9 +46,18 @@ const webSchema = mongoose.Schema({
         trim: true,
     }
     ,
+    price: {
+        type: Number,
+        required: true,
+    }
+    ,
     date: {
         type: String,
         required: true,
+        trim: true,
+    },address:{
+        type: String,
+       
         trim: true,
     }
 },

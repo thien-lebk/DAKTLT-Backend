@@ -27,6 +27,10 @@ router.post('/themvaodb', thienController.adddata);
 router.get('/searchlocation', thienController.searchLocation);
 router.get('/searcharea', thienController.searchArea);
 
+router.get('/fixpricebds', thienController.fixPriceBatdongsan);  //lam lai bds123.com
+router.get('/thongketheoquan', thienController.thongKeTheoQuan);  //lam lai bds123.com
+router.get('/fixthongke', thienController.fixthongke);  //lam lai bds123.com
+
 
 
 module.exports = router;

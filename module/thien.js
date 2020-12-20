@@ -393,3 +393,32 @@ module.exports.muabannhadat = async function (date, pages) {
         return result;
     }
 
+    exports.batdongsan321 = async (url) => {
+        try {
+           
+    
+        
+            const $ = await fetchHTML(url)
+            //ID
+            let cx = $('.re-district a')
+            var add ="";
+            cx.each((i, e) => {
+    
+              let text =  $(e).text()
+              if(add.length == 0 && i != 0){
+                  add+= text;
+              }else if (i != 0){
+                add+= " -" + text;
+              }
+            })
+    
+    
+    
+      
+        return (add) ;
+        } catch (error) {
+            console.log(error);
+            return ("")
+        }
+       
+    }
