@@ -42,14 +42,21 @@ exports.tinh2 = async (req, res, next) => {
 exports.getall = async (req, res, next) => {
 
 	try {
-		var page = req.query.page || 1;
+		var page_index = Number.parseInt(req.query.page_index) || 1;
+		var page_size = Number.parseInt(req.query.page_size) || 10;
+
+		let skips = page_size * page_index;
+
 		var location = req.query.location || "";
 		var title = req.query.title || "";
 		var areaFrom = parseInt(req.query.areaFrom) || 0;
         var areaTo = parseInt(req.query.areaTo) || 0;
 		var totalEle = 10;
-        var a = await Web.find({ location: { $regex: location, $options: 'i' } ,title: { $regex: title, $options: 'i' }})
-		console.log(a.length);
+
+		var queries = { location: { $regex: location, $options: 'i' } ,title: { $regex: title, $options: 'i' }}
+
+		var totalRecords = await Web.count(queries);
+		var a = await Web.find(queries).skip(skips).limit(page_size);
 
 		if(areaFrom >0 && areaTo>0){
 			var newA = []
@@ -83,31 +90,8 @@ exports.getall = async (req, res, next) => {
 			a = newA;
 		}
 		
-      
+		let objReturn = { "totalRecords": totalRecords, "currPage": page_index, "data": a }
 
-
-
-
-		var data = []
-		if (page == 1) {
-			var i = 0;
-		} else {
-			var i = (page - 1) * totalEle;
-			
-		}
-
-		for (i; i < a.length; i++) {
-			
-			data.push(a[i])
-		}
-
-		let objReturn = { "totalPage": a.length, "currPage": page, "data": data }
-		if (a.length % totalEle == 0) {
-			objReturn.totalPage = parseInt(a.length / totalEle)
-		} else {
-			objReturn.totalPage = parseInt(a.length / totalEle) + 1
-
-		}
 		return res.send(objReturn);
 	} catch (error) {
 		console.log(error);
