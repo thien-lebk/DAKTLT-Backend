@@ -43,9 +43,48 @@ exports.getall = async (req, res, next) => {
 
 	try {
 		var page = req.query.page || 1;
+		var location = req.query.location || "";
+		var title = req.query.title || "";
+		var areaFrom = parseInt(req.query.areaFrom) || 0;
+        var areaTo = parseInt(req.query.areaTo) || 0;
 		var totalEle = 10;
-		const a = await Web.find()
+        var a = await Web.find({ location: { $regex: location, $options: 'i' } ,title: { $regex: title, $options: 'i' }})
 		console.log(a.length);
+
+		if(areaFrom >0 && areaTo>0){
+			var newA = []
+			a.forEach(ele => {
+				let compare = ele.area.split("m2");
+				if (compare[0] >= areaFrom && compare[0] <= areaTo) {
+					newA.push(ele);
+				}
+			}
+			)
+		} else if( areaFrom >0){
+			var newA = []
+			a.forEach(ele => {
+				let compare = ele.area.split("m2");
+				if (compare[0] >= areaFrom ) {
+					newA.push(ele);
+				}
+			}
+			)
+		} else if( areaTo >0){
+			var newA = []
+			a.forEach(ele => {
+				let compare = ele.area.split("m2");
+				if (compare[0] >= areaFrom ) {
+					newA.push(ele);
+				}
+			}
+			)
+		}
+		
+        a = newA;
+
+
+
+
 		var data = []
 		if (page == 1) {
 			var i = 0;
