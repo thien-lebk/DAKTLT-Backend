@@ -60,6 +60,7 @@ exports.getall = async (req, res, next) => {
 				}
 			}
 			)
+			a = newA;
 		} else if( areaFrom >0){
 			var newA = []
 			a.forEach(ele => {
@@ -69,6 +70,7 @@ exports.getall = async (req, res, next) => {
 				}
 			}
 			)
+			a = newA;
 		} else if( areaTo >0){
 			var newA = []
 			a.forEach(ele => {
@@ -78,9 +80,10 @@ exports.getall = async (req, res, next) => {
 				}
 			}
 			)
+			a = newA;
 		}
 		
-        a = newA;
+      
 
 
 
@@ -90,9 +93,11 @@ exports.getall = async (req, res, next) => {
 			var i = 0;
 		} else {
 			var i = (page - 1) * totalEle;
+			
 		}
 
-		for (i; i < totalEle; i++) {
+		for (i; i < a.length; i++) {
+			
 			data.push(a[i])
 		}
 
