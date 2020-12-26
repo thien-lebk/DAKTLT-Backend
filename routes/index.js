@@ -29,8 +29,9 @@ router.get('/searchlocation', thienController.searchLocation);
 router.get('/searcharea', thienController.searchArea);
 
 router.get('/fixpricebds', thienController.fixPriceBatdongsan);  //lam lai bds123.com
-router.get('/thongketheoquan', thienController.thongKeTheoQuan);  //lam lai bds123.com
+// router.get('/thongketheoquan', thienController.thongKeTheoQuan);  //lam lai bds123.com
 router.get('/fixthongke', thienController.fixthongke);  //lam lai bds123.com
+router.get('/getthongke', thienController.gettThongKe);  //get thong ke
 
 
 router.get('/cleanaddress', tinhController.cleanAddress);  //Làm sạch địa chỉ

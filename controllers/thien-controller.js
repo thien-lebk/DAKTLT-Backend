@@ -340,3 +340,18 @@ exports.fixthongke = async (req, res, next) => {
     }
 
 }
+exports.gettThongKe = async (req, res, next) => {
+    try {
+        // var listWeb = await Web.find({address:{$regex:"Bà Rịa - Vũng Tàu -Bà Rịa", $options: 'i'}})
+        var thongKe = await ThongKe.find();
+       
+
+       
+        return res.send({data:thongKe});
+    } catch (error) {
+        console.log(error);
+        return res.send("123")
+    }
+
+}
+//MongooseError: Operation `thongkes.find()` buffering timed out after 10000ms
