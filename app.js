@@ -7,8 +7,10 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const { resolve } = require('path');
+var cors = require('cors')
 
 var app = express();
+app.use(cors())
 
 require('./db/config') //run connect to database
 
